@@ -143,7 +143,7 @@ powershell -ExecutionPolicy Bypass -File Tools/performance-benchmark.ps1
 
 ### Unity 原生验证
 
-工程包含 **27 个原生测试用例**，包括：
+工程包含 **28 个原生测试用例**，包括：
 
 - 暂停时换弹和 TrainingTime 停止；
 - 动态靶随训练时钟冻结；

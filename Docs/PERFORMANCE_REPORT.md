@@ -108,4 +108,4 @@ powershell -ExecutionPolicy Bypass -File Tools/performance-benchmark.ps1
 - 5 次运行时代码编译全部通过；
 - `git diff --check` 无空白错误。
 
-工程中的 27 个 Unity 原生测试仍需要在有 Unity 2021.3.8f1c1 的环境执行。实际性能验收还应结合 Unity Profiler、F8 面板和连续射击测试。
+工程中的 28 个 Unity 原生测试仍需要在有 Unity 2021.3.8f1c1 的环境执行。实际性能验收还应结合 Unity Profiler、F8 面板和连续射击测试。

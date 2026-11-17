@@ -97,7 +97,7 @@ powershell -ExecutionPolicy Bypass -File Tools/validate-five-times.ps1
 
 ## 7. Unity 原生验证与限制
 
-工程现有 **27 个 Unity 原生测试用例**，新增覆盖：
+工程现有 **28 个 Unity 原生测试用例**，新增覆盖：
 
 - 武器切换禁止射击和独立弹药；
 - 模型相机父子关系及旋转后局部坐标无漂移；

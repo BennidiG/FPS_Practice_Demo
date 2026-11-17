@@ -18,7 +18,8 @@ namespace FpsPractice
         private readonly AimPathTracker aimPath = new AimPathTracker();
         private float trackingTime;
         private float onTargetTime;
-        private bool recordSaved;
+        private TrainingRecord activeRecord;
+        private bool persistenceEnabled = true;
         private int currentScenarioIndex;
 
         public float TimeSeconds { get; private set; }
@@ -48,6 +49,7 @@ namespace FpsPractice
         public float TrackingTimeRatio { get { return trackingTime > 0f ? onTargetTime / trackingTime : 0f; } }
         private string lastExportPath = string.Empty;
         public string LastExportPath { get { return lastExportPath; } private set { lastExportPath = value; } }
+        public bool PersistenceEnabled { get { return persistenceEnabled; } set { persistenceEnabled = value; } }
         public string AdvancedSummaryText
         {
             get
@@ -186,7 +188,7 @@ namespace FpsPractice
             aimPath.Reset();
             trackingTime = 0f;
             onTargetTime = 0f;
-            recordSaved = false;
+            activeRecord = null;
             metrics.Reset();
             TimeSeconds = 0f;
             SummaryText = string.Empty;
@@ -270,18 +272,46 @@ namespace FpsPractice
         }
         private void RecordTraining()
         {
-            if (recordSaved || metrics.Shots == 0)
+            if (metrics.Shots == 0)
             {
                 return;
             }
 
-            recordSaved = true;
-            TrainingRecord record = metrics.BuildRecord(CurrentScenarioName,
+            TrainingRecord latest = metrics.BuildRecord(CurrentScenarioName,
                 weapon != null ? weapon.CurrentWeaponName : "Unknown", CurrentScenario.Seed);
-            record.utcTimestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
-            record.trackingTimeRatio = TrackingTimeRatio;
-            TrainingHistoryStore.Add(record);
+            latest.utcTimestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            latest.trackingTimeRatio = TrackingTimeRatio;
+            if (activeRecord == null)
+            {
+                activeRecord = latest;
+                TrainingHistoryStore.Add(activeRecord);
+            }
+            else
+            {
+                UpdateRecord(activeRecord, latest);
+            }
+
             SaveHistoryFiles();
+        }
+
+        private static void UpdateRecord(TrainingRecord target, TrainingRecord source)
+        {
+            target.scenario = source.scenario;
+            target.weapon = source.weapon;
+            target.utcTimestamp = source.utcTimestamp;
+            target.seed = source.seed;
+            target.shots = source.shots;
+            target.hits = source.hits;
+            target.kills = source.kills;
+            target.score = source.score;
+            target.bestStreak = source.bestStreak;
+            target.accuracy = source.accuracy;
+            target.reactionMedian = source.reactionMedian;
+            target.reactionP95 = source.reactionP95;
+            target.ttkMedian = source.ttkMedian;
+            target.ttkP95 = source.ttkP95;
+            target.mousePathEfficiency = source.mousePathEfficiency;
+            target.trackingTimeRatio = source.trackingTimeRatio;
         }
 
         public string ExportTrainingData()
@@ -298,6 +328,12 @@ namespace FpsPractice
 
         private void SaveHistoryFiles()
         {
+            if (!persistenceEnabled)
+            {
+                LastExportPath = string.Empty;
+                return;
+            }
+
             try
             {
                 Directory.CreateDirectory(ExportDirectory);
