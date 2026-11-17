@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a84b3b89724efaa5c107fae42c3601, type: 3}
+  m_Name: PrecisionSidearm
+  m_EditorClassIdentifier:
+  displayName: Precision Sidearm
+  model: 1
+  magazineSize: 12
+  roundsPerMinute: 260
+  reloadDuration: 1
+  automatic: 0
+  spreadAngle: 0
+  recoilPitch: 0.4
+  recoilYaw: 0.04
+  range: 100
+  damage: 50

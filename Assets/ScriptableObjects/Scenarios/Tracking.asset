@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c903c93857f4a6c91bb22c897cb3003, type: 3}
+  m_Name: Tracking
+  m_EditorClassIdentifier:
+  displayName: Tracking
+  mode: 2
+  targetCount: 3
+  targetHealth: 120
+  motion: 2
+  moveSpeed: 1.5
+  amplitudeX: 2.5
+  amplitudeY: 0.4
+  minimumRespawnDelay: 0.3
+  maximumRespawnDelay: 0.3
+  duration: 60
+  seed: 34567
